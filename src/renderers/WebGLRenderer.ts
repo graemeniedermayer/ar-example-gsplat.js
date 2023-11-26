@@ -28,7 +28,8 @@ export class WebGLRenderer {
             canvas.style.padding = "0";
             document.body.appendChild(canvas);
         }
-        canvas.style.background = "#000";
+        // need ro be removed for canvas
+        // canvas.style.background = "#000";
         this.domElement = canvas;
 
         const gl = canvas.getContext("webgl2", { antialias: false }) as WebGL2RenderingContext;

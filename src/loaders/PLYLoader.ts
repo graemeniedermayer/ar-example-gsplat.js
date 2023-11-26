@@ -176,6 +176,12 @@ class PLYLoader {
                         break;
                     case "opacity":
                         rgba[3] = (1 / (1 + Math.exp(-value))) * 255;
+                        if (rgba[0] + rgba[1] + rgba[2] > 750) {
+                            rgba[3] = 0;
+                        }
+                        if (rgba[0] + rgba[1] + rgba[2] < 1) {
+                            rgba[3] = 0;
+                        }
                         break;
                     case "rot_0":
                         r0 = value;

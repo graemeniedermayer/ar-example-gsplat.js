@@ -1,4 +1,19 @@
-# gsplat.js
+# gsplat.js (with AR example)
+
+#### This fork has an added AR example
+
+The example should work with the base library with standard gaussian splats. Gaussian splats from dream gaussian they often have a lot of black/white gaussian so you may want to filter those out. I've added some of these filters to the library so you may want to rebuilt and route the built package package.json .
+
+in the package.json,
+
+```
+"dependencies": {
+    "gsplat": "file:../gsplat.js",
+    "three": "^0.158.0"
+}
+```
+
+xr also requires service on ssl for local setups self signed certificates work fine!
 
 #### JavaScript Gaussian Splatting library
 

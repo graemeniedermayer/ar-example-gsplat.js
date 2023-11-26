@@ -7,8 +7,17 @@ const initial_z = 14
 
 let trenderer:any, xrRefSpace:any, tscene:any, tcamera:any;
 const scene = new SPLAT.Scene();
-const camera = new SPLAT.Camera();
+const camera = new SPLAT.Camera(
+    new SPLAT.Vector3(0, 0, -5),
+    new SPLAT.Quaternion(),
+    2232 / 4,
+    2232 / 4,
+    0.03,
+    100
+)
 const renderer = new SPLAT.WebGLRenderer();
+// remove background color from renderer
+renderer.domElement.style.background = "unset";
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 async function convertPLYToSPLAT(url: string) {
@@ -110,16 +119,15 @@ function onXRFrame(t:any, frame:any) {
   const baseLayer = session.renderState.baseLayer;
   const pose = frame.getViewerPose(xrRefSpace);
 
-  trenderer.render( tscene, tcamera );
-  camera.position.set(
-    scale*movement_scale*tcamera.position.x, 
-    -scale*movement_scale*tcamera.position.y-1, 
-    -scale*movement_scale*tcamera.position.z-initial_z)
-  camera.rotation.set(tcamera.quaternion.x, -tcamera.quaternion.y, -tcamera.quaternion.z, tcamera.quaternion.w)
-
-  
+  trenderer.render( tscene, tcamera );  
+  camera._position.x = scale*movement_scale*tcamera.position.x;
+  camera._position.y = -scale*movement_scale*tcamera.position.y-1;
+  camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
+  camera._rotation.x = tcamera.quaternion.x;
+  camera._rotation.y = -tcamera.quaternion.y;
+  camera._rotation.z = -tcamera.quaternion.z;
+  camera._rotation.w = tcamera.quaternion.w;
 }
-
 
 async function main() {
 
@@ -130,7 +138,6 @@ async function main() {
     // dreamgaussian example
     const url = "/src/fantasy_castle1_model.ply";
     const data = await convertPLYToSPLAT(url);
-    // saveToFile(data, "bicycle.splat");
 
     const frame = () => {
         renderer.render(scene, camera);
