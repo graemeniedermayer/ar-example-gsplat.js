@@ -20,9 +20,9 @@ class Camera extends Object3D {
     constructor(
         position = new Vector3(0, 0, -5),
         rotation = new Quaternion(),
-        fx = 1132,
-        fy = 1132,
-        near = 0.1,
+        fx = 2232 / 4,
+        fy = 2232 / 4,
+        near = 0.03,
         far = 100,
     ) {
         super();
